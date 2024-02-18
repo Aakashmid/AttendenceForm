@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-us1f^f*9uc2=3hei^r3z99bgdvg!vd8o6n^ymoewy$py%)2$j@
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [ 'attendenceform.onrender.com','127.0.0.1']
 
 
 # Application definition
