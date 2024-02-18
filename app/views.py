@@ -1,0 +1,58 @@
+from django.shortcuts import render,HttpResponse,HttpResponseRedirect,redirect
+from django.urls import reverse
+from django.contrib.auth.models import User
+from django.contrib.auth import login,logout,authenticate
+from django.contrib import messages
+from .models import Condidate
+from datetime import datetime
+# Create your views here.
+
+
+# ssss1234
+def home(request,condidate_id=None):
+    # return HttpResponse('Home page')
+        
+    if request.user.is_anonymous:
+        return render(request,'app/login.html')
+    elif condidate_id: 
+        condidate=Condidate.objects.get(id=condidate_id)
+        return render(request,'app/index.html',{'condidate':condidate})
+    else:
+        if request.method=="POST":
+            name=request.POST.get('name')
+            f_name=request.POST.get('fname')
+            p_name=request.POST.get('pname')
+            service_type=request.POST.get('service')
+            if Condidate.objects.filter(user=request.user).exists():
+                Encondidate=Condidate.objects.get(user=request.user)
+                entryTime=Encondidate.Entrytime
+                Encondidate.delete()
+                condidate=Condidate(user=request.user,name=name,fname=f_name,pname=p_name,serviceType=service_type,Entrytime=entryTime)
+                condidate.save()
+                messages.success(request,'Exited !!')
+                logout(request)
+                return HttpResponseRedirect(reverse("app:Home"))
+            else:
+                condidate=Condidate(user=request.user,name=name,fname=f_name,pname=p_name,serviceType=service_type)
+                condidate.save()
+                messages.success(request,'Entered !!')
+                return HttpResponseRedirect(reverse("app:Home",args=(condidate.id,)))
+        else:
+            return render(request,'app/index.html')
+    
+def loginhand(request):
+    if request.method=="POST":
+        username=request.POST.get('username')
+        password=request.POST.get('password')
+        user_authenticated=authenticate(username=username,password=password)
+        if user_authenticated:
+            login(request,user_authenticated)
+            return HttpResponseRedirect(reverse("app:Home"))
+        else:
+            return render(request,'app/login.html')
+    else:
+        return render(request,'app/login.html')
+def logouthand(request):
+    logout(request)
+    messages.success(request,"Successsfully logout !!")
+    return redirect('/')

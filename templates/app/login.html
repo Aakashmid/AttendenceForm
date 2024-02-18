@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}
+Login page
+{% endblock title %}
+
+
+{% block body %}
+<div class="container">
+    <div class="translate-y-[25%] ">
+        <!-- <h1 class="text-center font-semibold lg:text-3xl text-lg">This is login  page</h1> -->
+        <div class="login-form-box py-4 px-4">
+            <div class="">
+                <h1 class="text-3xl font-semibold text-center">Login 
+                </h1>
+                <!-- <p class="">Welcome !  </p>
+                <p class="">Please login to continue</p> -->
+            </div>
+            <form action="{% url 'app:Login' %}" method="POST" class="mt-8 flex flex-col space-y-6">
+                {% csrf_token %}
+                <div class="flex flex-col space-y-1">
+                    <label class="text-lg p-1" for="">Username</label>
+                    <input class="text-lg p-2 outline focus:outline-purple-600 focus:outline-2 shadow-lg  caret-purple-950 outline-purple-500 outline-1 rounded" type="text" placeholder="Your username" id="username" name="username" required>
+                </div>
+                <div class="flex flex-col space-y-1">
+                    <label class="text-lg p-1" for="">Password</label>
+                    <input class="text-lg p-2 outline focus:outline-purple-600 focus:outline-2 shadow-lg   caret-purple-950 outline-purple-500 outline-1 rounded" type="password" placeholder="Your password" id="password" name="password" required >
+                </div>
+                <div class="">
+                    <button class= "w-full bg-purple-950 text-white text-lg font-medium rounded-2xl p-2">LOGIN</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock body %}

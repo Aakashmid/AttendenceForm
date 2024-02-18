@@ -1,0 +1,49 @@
+{% load compress %}
+{% load static %}
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock title %}</title>
+    
+    {% compress css %}
+    <link rel="stylesheet" href="{% static 'src/output.css' %}">
+    {% endcompress %}
+    <style>
+    </style>
+</head>
+
+<body>
+    {% for Message in messages %}
+    <div id="alert" class="Dismissable-alert    p-2 bg-gray-100 w-full flex justify-between items-center">
+        <p class=""><strong>{{Message.tags}} : </strong> {{Message}}</p>
+        <span class="text-xl text-black px-2 rounded-lg  hover:bg-gray-300 active:text-white"
+            id="dismiss_alert">&times;</span>
+    </div>
+    {% endfor %}
+    {% block body %}
+
+    {% endblock body %}
+    {% block js %}
+    {% endblock js %}
+    <script>
+        // Dissmiss Alert
+        var alert = document.getElementById('alert');
+        if (alert) {
+            var alert_btn = document.getElementById('dismiss_alert');
+            alert_btn.onclick = function () {
+                var alert = document.getElementById('alert');
+                if (alert.classList.contains('flex')) {
+                    alert.classList.remove('flex');
+                    alert.classList.add('hidden');
+                }
+            }
+        }
+    </script>
+
+</body>
+
+</html>

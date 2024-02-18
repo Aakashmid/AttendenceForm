@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}
+Home page
+{% endblock title %}
+
+
+{% block body %}
+<div class="container">
+    <h1 class="mt-6 text-center">Home page</h1>
+    <div class="">
+        <div class="form-box p-3">
+            <h1 class="font-normal text-3xl mt-14 p-2">Attendence form</h1>
+            <form action="{% url 'app:Home' %}" method="post" class="flex flex-col space-y-6 p-2">
+                {% csrf_token %}
+                <div class="flex flex-col space-y-1">
+                    <label class="text-lg " for="name">Name</label>
+                    <input type="text" placeholder="Your answer" id="name" name="name"
+                        class="outline-none text-lg py-2 border-purple-200 caret-purple-600 border-b-2 focus:border-purple-600" required>
+                </div>
+                <div class="flex flex-col space-y-1">
+                    <label class="text-lg " for="fname">Father Name</label>
+                    <input type="text" placeholder="Your answer" id="fname" name="fname"
+                        class="outline-none text-lg py-2 border-purple-200 caret-purple-600 border-b-2 focus:border-purple-600" required>
+                </div>
+                <div class="flex flex-col space-y-2">
+                    <p class="text-lg font-normal">Service Type</p>
+
+                    <label for="t_hr_day">
+                        <input type="radio" id="t_hr_day" name="service" value="12 hr Day Shift" required>
+                        12 hr Day shift</label>
+
+                    <label for="t_hr_night">
+                        <input type="radio" id="t_hr_night" name="service" value="12 hr Night Shift" required>
+                        12 hr Night Shift</label>
+
+                </div>
+                <div class="flex flex-col space-y-1">
+                    <label class="text-lg " for="pname">Patient Name</label>
+                    <input type="text" name="pname" id="pname" placeholder="Your answer"
+                        class="outline-none text-lg py-2 border-purple-200 caret-purple-600 border-b-2 focus:border-purple-600" value="" required>
+                </div>
+                <div class="">
+                    <button type="submit" class="py-1 bg-purple-800 text-white rounded-xl px-4 font-normal text-lg">Submit</button>
+                    <a role="button" href="{% url 'app:Logout' %}" class="py-1 bg-purple-800 text-white rounded-xl px-4 font-normal text-lg">Logout</a>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock body %}
