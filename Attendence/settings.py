@@ -127,10 +127,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # Added manually 
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
-]
+STATIC_ROOT=BASE_DIR / 'static'
+
+# STATICFILES_DIRS = [
+#     BASE_DIR / "static",
+# ]
+
+# MEDIA_URL='/media/'
+# MEDIA_ROOT=BASE_DIR /'media'
 
 COMPRESS_ROOT=BASE_DIR /'static'
 COMPRESS_ENABLED=True
-STATICFILES_FINDERS=('compressor.finders.CompressorFinder',)
+# STATICFILES_FINDERS=('compressor.finders.CompressorFinder',)
