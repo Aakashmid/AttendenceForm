@@ -16,7 +16,8 @@ def home(request,condidate_id=None):
         return render(request,'app/login.html')
     elif condidate_id: 
         condidate=Condidate.objects.get(id=condidate_id)
-        return render(request,'app/index.html',{'condidate':condidate})
+        condidates=Condidate.objects.all()
+        return render(request,'app/index.html',{'condidate':condidate,'Condidates':condidates})
     else:
         if request.method=="POST":
             name=request.POST.get('name')
@@ -65,3 +66,19 @@ def logouthand(request):
     logout(request)
     messages.success(request,"Successsfully logout !!")
     return redirect('/')
+
+def createuser(request,username='',password=""):
+    if (len(username)>1 and len(password)>1):
+        if User.objects.filter(username=username).exists():
+            messages.error(request,'Username is alerdy taken')
+            return render(request,'app/login.html')
+        else:
+            user=User(username=username,password=password)
+            user.save()
+            login(request,user)
+            messages.success(request,'User is created successfully !!')
+            condidates=Condidate.objects.all()
+            return render(request,'app/index.html',{'Condidates':condidates})
+    else:
+        messages.error(request,'Please enter username and password ')
+        return render(request,'app/login.html')

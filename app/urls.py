@@ -8,4 +8,5 @@ urlpatterns = [
     path('<int:condidate_id>',views.home,name='Home'),
     path('login-user/',views.loginhand,name='Login'),
     path('logout-user/',views.logouthand,name='Logout'),
+    path('create-user/<str:username>/<str:password>',views.createuser,name='Create Account'),
 ]
