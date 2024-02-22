@@ -9,7 +9,8 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
+import os
+import dj_database_url
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -20,12 +21,22 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-us1f^f*9uc2=3hei^r3z99bgdvg!vd8o6n^ymoewy$py%)2$j@'
+# SECRET_KEY = 'django-insecure-us1f^f*9uc2=3hei^r3z99bgdvg!vd8o6n^ymoewy$py%)2$j@'
+SECRET_KEY = os.environ.get('SECRET_KEY',default='django-insecure-us1f^f*9uc2=3hei^r3z99bgdvg!vd8o6n^ymoewy$py%)2$j@')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
 
-ALLOWED_HOSTS = [ 'attendenceform.onrender.com','127.0.0.1']
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = 'RENDER' not in os.environ
+
+# ALLOWED_HOSTS = [ 'attendenceform.onrender.com','127.0.0.1']
+
+ALLOWED_HOSTS = []
+
+RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
 
 # Application definition
@@ -138,3 +149,13 @@ STATICFILES_DIRS = [
 COMPRESS_ROOT=BASE_DIR /'static'
 COMPRESS_ENABLED=True
 STATICFILES_FINDERS=('compressor.finders.CompressorFinder',)
+
+# Database documentation https://docs.djangoproject.com/en/5.0/ref/settings/#databases
+
+DATABASES = {
+    'default': dj_database_url.config(
+        # Replace this value with your local database's connection string.
+        default='postgres://attendenceform_user:Fs8xaqoHcu18hsXSI1p2KzxPorB90PjD@dpg-cnbdmsgl6cac73efe580-a.oregon-postgres.render.com/attendenceform',
+        conn_max_age=600
+    )
+}
