@@ -7,9 +7,9 @@ Home page
 
 {% block body %}
 <div class="container">
-    <h1 class="mt-6 text-center">Home page</h1>
+    <h1 class="mt-6 text-xl font-bold text-center">Home page</h1>
     <div class="">
-        <div class="form-box p-3">
+        <div class="form-box p-3 lg:w-[57%] mx-auto ">
             <h1 class="font-normal text-3xl mt-14 p-2">Attendence form</h1>
             <form action="{% url 'app:Home' %}" method="post" class="flex flex-col space-y-6 p-2">
                 {% csrf_token %}
@@ -46,6 +46,20 @@ Home page
 
                 </div>
             </form>
+        </div>
+
+        <div class="list mx-auto lg:w-1/2 mt-6">
+            <p class="">All Condidates</p>
+            <div class="py-4">
+                {% for emp in Condidates  %}
+                <ul class="flex justify-between mt-3">
+                    <li class="">{{emp.name}}</li>
+                    <li class="">{{emp.Entrytime}}</li>
+                    <li class="">{{emp.Exittime}}</li>
+                    <li class="">{{emp.date}}</li>
+                </ul>
+                {% endfor %}
+            </div>
         </div>
     </div>
 </div>

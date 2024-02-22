@@ -24,21 +24,28 @@ def home(request,condidate_id=None):
             p_name=request.POST.get('pname')
             service_type=request.POST.get('service')
             if Condidate.objects.filter(user=request.user).exists():
-                Encondidate=Condidate.objects.get(user=request.user)
-                entryTime=Encondidate.Entrytime
-                Encondidate.delete()
-                condidate=Condidate(user=request.user,name=name,fname=f_name,pname=p_name,serviceType=service_type,Entrytime=entryTime)
-                condidate.save()
-                messages.success(request,'Exited !!')
-                logout(request)
-                return HttpResponseRedirect(reverse("app:Home"))
+                condidate=Condidate.objects.get(user=request.user)
+                if not (condidate.Entrytime < condidate.Exittime):
+                    Encondidate=Condidate.objects.get(user=request.user)
+                    entryTime=Encondidate.Entrytime
+                    Encondidate.delete()
+                    condidate=Condidate(user=request.user,name=name,fname=f_name,pname=p_name,serviceType=service_type,Entrytime=entryTime)
+                    condidate.save()
+                    messages.success(request,'Exited !!')
+                    # logout(request)
+                    return HttpResponseRedirect(reverse("app:Home"))
+                else:
+                    messages.error(request,"You Aleready Exited !!")
+                    return HttpResponseRedirect(reverse("app:Home"))
+
             else:
                 condidate=Condidate(user=request.user,name=name,fname=f_name,pname=p_name,serviceType=service_type)
                 condidate.save()
                 messages.success(request,'Entered !!')
                 return HttpResponseRedirect(reverse("app:Home",args=(condidate.id,)))
         else:
-            return render(request,'app/index.html')
+            condidates=Condidate.objects.all()
+            return render(request,'app/index.html',{'Condidates':condidates})
     
 def loginhand(request):
     if request.method=="POST":
@@ -47,8 +54,10 @@ def loginhand(request):
         user_authenticated=authenticate(username=username,password=password)
         if user_authenticated:
             login(request,user_authenticated)
+            messages.success(request,'Logged in successfully')
             return HttpResponseRedirect(reverse("app:Home"))
         else:
+            messages.error(request,'Username or password is wrong')
             return render(request,'app/login.html')
     else:
         return render(request,'app/login.html')
