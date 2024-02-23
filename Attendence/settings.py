@@ -151,13 +151,13 @@ STATICFILES_FINDERS=('compressor.finders.CompressorFinder',)
 
 # Database documentation https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {
-    'default': dj_database_url.config(
-        # Replace this value with your local database's connection string.
-        default='postgres://attendenceform_user:Fs8xaqoHcu18hsXSI1p2KzxPorB90PjD@dpg-cnbdmsgl6cac73efe580-a.oregon-postgres.render.com/attendenceform',
-        conn_max_age=600
-    )
-}
+# DATABASES = {
+#     'default': dj_database_url.config(
+#         # Replace this value with your local database's connection string.
+#         default='postgres://attendenceform_user:Fs8xaqoHcu18hsXSI1p2KzxPorB90PjD@dpg-cnbdmsgl6cac73efe580-a.oregon-postgres.render.com/attendenceform',
+#         conn_max_age=600
+#     )
+# }
 
 database_url=os.environ.get('DATABASE_URL')
 DATABASES['default']=dj_database_url.parse(database_url)
