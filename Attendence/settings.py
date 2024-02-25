@@ -151,9 +151,10 @@ STATICFILES_FINDERS=('compressor.finders.CompressorFinder',)
 
 # Database documentation https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-database_url=os.environ.get('DATABASE_URL')
+# database_url=os.environ.get('DATABASE_URL')
 # DATABASES['default']=dj_database_url.parse('postgres://attendenceform_user:Fs8xaqoHcu18hsXSI1p2KzxPorB90PjD@dpg-cnbdmsgl6cac73efe580-a.oregon-postgres.render.com/attendenceform')
-DATABASES['default']=dj_database_url.parse(database_url)
+# DATABASES['default']=dj_database_url.parse(database_url)
+
 # DATABASES = {
 #     'default': dj_database_url.config(
 #         # Replace this value with your local database's connection string.
@@ -162,3 +163,14 @@ DATABASES['default']=dj_database_url.parse(database_url)
 #         conn_max_age=600
 #     )
 # }
+
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": os.getenv("DB_NAME", "db"),
+        "USER": os.getenv("DB_USER", "kenny"),
+        "HOST": os.getenv("DB_HOST", "localhost"),
+        "PASSWORD": os.getenv("DB_PASSWORD", ""),
+        "PORT": os.getenv("DB_PORT", 5432),
+    }
+}
