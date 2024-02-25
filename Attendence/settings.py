@@ -163,14 +163,12 @@ STATICFILES_FINDERS=('compressor.finders.CompressorFinder',)
 #         conn_max_age=600
 #     )
 # }
+DB_NAME = os.getenv("DB_NAME", "db")
+DB_USER = os.getenv("DB_USER", "kenny")
+DB_HOST = os.getenv("DB_HOST", "localhost")
+DB_PASSWORD = os.getenv("DB_PASSWORD", "")
+DB_PORT = os.getenv("DB_PORT", 5432)
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.getenv("DB_NAME", "db"),
-        "USER": os.getenv("DB_USER", "kenny"),
-        "HOST": os.getenv("DB_HOST", "localhost"),
-        "PASSWORD": os.getenv("DB_PASSWORD", ""),
-        "PORT": os.getenv("DB_PORT", 5432),
-    }
+    'default': dj_database_url.parse(f'postgres://{DB_USER}:{DB_PASSWORD}@{DB_HOST}/{DB_NAME}')
 }
