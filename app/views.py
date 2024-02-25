@@ -26,7 +26,7 @@ def home(request,condidate_id=None):
             service_type=request.POST.get('service')
             if Condidate.objects.filter(user=request.user).exists():
                 condidate=Condidate.objects.get(user=request.user)
-                if not (condidate.Entrytime < condidate.Exittime):
+                if condidate.Entrytime == condidate.Exittime:
                     Encondidate=Condidate.objects.get(user=request.user)
                     entryTime=Encondidate.Entrytime
                     Encondidate.delete()
