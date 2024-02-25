@@ -28,13 +28,13 @@ SECRET_KEY = os.environ.get('SECRET_KEY',default='django-insecure-us1f^f*9uc2=3h
 # DEBUG = True
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = 'RENDER' not in os.environ
+DEBUG =os.environ.get("DEBUG",'False').lower()=='true'
 
 # ALLOWED_HOSTS = [ 'attendenceform.onrender.com','127.0.0.1']
 
-ALLOWED_HOSTS = []
-hostname=os.environ.get('HOSTNAME')
-ALLOWED_HOSTS.append(hostname)
+ALLOWED_HOSTS =os.environ.get('ALLOWED_HOSTS').split(" ")
+# hostname=os.environ.get('HOSTNAME')
+# ALLOWED_HOSTS.append(hostname)
 
 
 
@@ -152,13 +152,13 @@ STATICFILES_FINDERS=('compressor.finders.CompressorFinder',)
 # Database documentation https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 database_url=os.environ.get('DATABASE_URL')
-DATABASES = {
-    'default': dj_database_url.config(
-        # Replace this value with your local database's connection string.
-        # default='postgres://attendenceform_user:Fs8xaqoHcu18hsXSI1p2KzxPorB90PjD@dpg-cnbdmsgl6cac73efe580-a.oregon-postgres.render.com/attendenceform',
-        default=dj_database_url.parse(database_url),
-        conn_max_age=600
-    )
-}
-
-# DATABASES['default']=dj_database_url.parse(database_url)
+# DATABASES['default']=dj_database_url.parse('postgres://attendenceform_user:Fs8xaqoHcu18hsXSI1p2KzxPorB90PjD@dpg-cnbdmsgl6cac73efe580-a.oregon-postgres.render.com/attendenceform')
+DATABASES['default']=dj_database_url.parse(database_url)
+# DATABASES = {
+#     'default': dj_database_url.config(
+#         # Replace this value with your local database's connection string.
+#         # default='postgres://attendenceform_user:Fs8xaqoHcu18hsXSI1p2KzxPorB90PjD@dpg-cnbdmsgl6cac73efe580-a.oregon-postgres.render.com/attendenceform',
+#         default=dj_database_url.parse(database_url),
+#         conn_max_age=600
+#     )
+# }
